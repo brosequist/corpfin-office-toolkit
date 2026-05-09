@@ -31,11 +31,19 @@ from pypdf import PdfReader
 
 BROKERCHECK_URL = "https://files.brokercheck.finra.org/individual/individual_{crd}.pdf"
 
+# FINRA's CDN blocks the default Python-urllib User-Agent. Any non-default
+# UA passes; pretending to be a browser keeps the request shape boring.
+USER_AGENT = "Mozilla/5.0 (compatible; corpfin-office-toolkit/brokercheck-pull)"
+
 NAME_BLOCK_START = "BrokerCheck Report"
 NAME_BLOCK_END = "Section Title"
 NOT_REGISTERED_MARKER = "This broker is not currently registered."
 HISTORY_BLOCK_START = "The broker previously was registered with"
-HISTORY_BLOCK_END = "This section provides up to 10 years"
+# "Employment History" is the next section header in the PDF and falls
+# closer to the actual end of the registration block than the older
+# "This section provides up to 10 years" marker, which still appears
+# but two lines later (after the "Employment History" header itself).
+HISTORY_BLOCK_END = "Employment History"
 
 
 @dataclass
@@ -49,7 +57,8 @@ class BrokerSummary:
 
 def fetch_pdf_text(crd: str, timeout: int = 30) -> str:
     url = BROKERCHECK_URL.format(crd=crd)
-    with urllib.request.urlopen(url, timeout=timeout) as resp:  # noqa: S310 (public FINRA URL)
+    req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+    with urllib.request.urlopen(req, timeout=timeout) as resp:  # noqa: S310 (public FINRA URL)
         data = resp.read()
     reader = PdfReader(io.BytesIO(data))
     return "\n".join(page.extract_text() or "" for page in reader.pages)
@@ -66,11 +75,14 @@ def parse_summary(crd: str, text: str) -> BrokerSummary:
     summary.currently_registered = NOT_REGISTERED_MARKER not in text
 
     history_start = text.find(HISTORY_BLOCK_START)
-    history_end = text.find(HISTORY_BLOCK_END)
-    if history_start != -1 and history_end != -1 and history_end > history_start:
-        summary.registration_history = (
-            text[history_start:history_end].strip().replace("\r\n", "\n")
-        )
+    if history_start != -1:
+        # Anchor the end search *after* the start so we skip earlier
+        # occurrences of the same string in the table of contents.
+        history_end = text.find(HISTORY_BLOCK_END, history_start + len(HISTORY_BLOCK_START))
+        if history_end != -1:
+            summary.registration_history = (
+                text[history_start:history_end].strip().replace("\r\n", "\n")
+            )
 
     return summary
 
