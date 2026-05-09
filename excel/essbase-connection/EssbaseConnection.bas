@@ -18,13 +18,15 @@ Option Explicit
 '   HypDisconnect          https://docs.oracle.com/cd/E87655_01/SVDEV/hypdisconnect.htm
 '   HypRemoveConnection    https://docs.oracle.com/cd/E87655_01/SVDEV/hypremoveconnection.htm
 
-' Define a reusable connection name for the current session, then
-' attach the supplied worksheet to it. Call HypMenuVRefresh on that
-' sheet to pull live data.
+' Create a reusable named connection, then attach the supplied
+' worksheet to it. After this returns 0, call RefreshSheet() (defined
+' below) to pull live data.
 '
 ' Returns 0 on full success; otherwise a non-zero step indicator:
 '   1 - HypCreateConnection failed
 '   2 - HypUIConnect failed
+' The underlying Hyp* return code is not surfaced; if you need it,
+' inline the calls instead of using this wrapper.
 Public Function CreateAndAttachConnection( _
     WorksheetName As String, _
     EssbaseUsername As String, _

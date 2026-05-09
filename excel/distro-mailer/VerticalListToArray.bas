@@ -4,13 +4,18 @@ Option Explicit
 ' Reads a contiguous vertical list of strings starting at StartCell and
 ' returns them as a String array. Stops at the first empty cell.
 '
-' Returns an empty (uninitialised) array if the first cell is empty.
+' Returns a zero-length allocated array if the first cell is empty, so
+' callers can safely Join / LBound / UBound the result without an
+' "uninitialised array" runtime error.
 Public Function StoreVerticalListToArray(StartCell As Range) As String()
 
     Dim Cursor As Range
     Set Cursor = StartCell.Cells(1, 1)
 
-    If Len(CStr(Cursor.Value)) = 0 Then Exit Function
+    If Len(CStr(Cursor.Value)) = 0 Then
+        StoreVerticalListToArray = Split(vbNullString)
+        Exit Function
+    End If
 
     Dim RowCount As Long
     RowCount = 0

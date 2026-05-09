@@ -22,6 +22,13 @@ End Sub
 ' Mixed reference: TargetCell becomes
 '   (cell to the left) / (column B value in the same row)
 ' Useful for "% of B" style ratios.
+'
+' Caveats with this specific formula:
+'   - If TargetCell is in column A, R[0]C[-1] points one column left of
+'     column A, which doesn't exist; the formula evaluates to #REF!.
+'   - If TargetCell is in column B, the R[0]C2 reference points back at
+'     TargetCell itself, creating a circular reference. Move the target
+'     to column C or further right.
 Public Sub WritePercentOfColumnB(TargetCell As Range)
     TargetCell.FormulaR1C1 = "=R[0]C[-1]/R[0]C2"
 End Sub

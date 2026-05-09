@@ -17,3 +17,8 @@ Desktop.ini
 .idea/
 *.swp
 *.swo
+
+# Python
+.venv/
+__pycache__/
+*.pyc

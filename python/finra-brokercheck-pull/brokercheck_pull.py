@@ -68,9 +68,13 @@ def parse_summary(crd: str, text: str) -> BrokerSummary:
     summary = BrokerSummary(crd=crd)
 
     name_start = text.find(NAME_BLOCK_START)
-    name_end = text.find(NAME_BLOCK_END)
-    if name_start != -1 and name_end != -1 and name_end > name_start:
-        summary.name = text[name_start + len(NAME_BLOCK_START) : name_end].strip().strip("\n")
+    if name_start != -1:
+        # Anchor the end search past the start, same robustness trick
+        # used for the history block — guards against any future
+        # variant of NAME_BLOCK_END appearing earlier (e.g. in a TOC).
+        name_end = text.find(NAME_BLOCK_END, name_start + len(NAME_BLOCK_START))
+        if name_end != -1:
+            summary.name = text[name_start + len(NAME_BLOCK_START) : name_end].strip().strip("\n")
 
     summary.currently_registered = NOT_REGISTERED_MARKER not in text
 
@@ -90,7 +94,7 @@ def parse_summary(crd: str, text: str) -> BrokerSummary:
 def load_crds(crds_arg: list[str], in_path: Path | None) -> list[str]:
     crds: list[str] = list(crds_arg)
     if in_path is not None:
-        with in_path.open(newline="") as f:
+        with in_path.open(newline="", encoding="utf-8") as f:
             reader = csv.reader(f)
             for row in reader:
                 if not row:
@@ -103,7 +107,7 @@ def load_crds(crds_arg: list[str], in_path: Path | None) -> list[str]:
 
 
 def write_csv(out_path: Path, rows: list[BrokerSummary]) -> None:
-    with out_path.open("w", newline="") as f:
+    with out_path.open("w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
         writer.writerow(["crd", "name", "currently_registered", "registration_history", "error"])
         for row in rows:
