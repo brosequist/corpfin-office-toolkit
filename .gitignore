@@ -1,0 +1,19 @@
+# Office lock / temp files
+~$*.xls*
+~$*.doc*
+~$*.ppt*
+*.tmp
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
