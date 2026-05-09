@@ -1,15 +1,15 @@
 # corpfin-office-toolkit
 
-Small, focused MS Office utilities for Corporate Finance professionals — the kind of glue code that would otherwise live as untracked snippets pasted into a teammate's email.
+Small, focused utilities for Corporate Finance professionals — the kind of glue code that would otherwise live as untracked snippets pasted into a teammate's email.
 
 ## Scope
 
-This is a personal collection. It favours:
+This is a personal collection. It favors:
 
 - **Excel** as the primary surface, since that's where most finance work lands.
 - **VBA** for in-workbook automation that needs to ship as a single file.
 - **Power Platform** (Power Apps + Power Automate) for SharePoint- and SQL-backed apps. Captured here as recipes you re-implement in your own tenant, not as importable binaries.
-- **Python** for one-off batch jobs against public APIs and document corpora.
+- **Python** for one-off batch jobs against public APIs.
 
 Each utility lives in its own directory with its own README explaining what it does, how to install it, and any caveats.
 
