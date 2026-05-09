@@ -18,6 +18,8 @@ Each utility lives in its own directory with its own README explaining what it d
 | Path | Description |
 |---|---|
 | [`excel/distro-mailer/`](excel/distro-mailer/) | Send the active Excel workbook to a list of email addresses read from a column on the active sheet. |
+| [`excel/macro-recipes/`](excel/macro-recipes/) | Small reusable VBA building blocks: cell-loop patterns, month-column writers, formatting, R1C1 formulas, worksheet resets, sheet iteration. |
+| [`excel/essbase-connection/`](excel/essbase-connection/) | VBA wrappers for the Oracle SmartView `Hyp*` connection lifecycle (create / attach / refresh / zoom / teardown). |
 | [`power-platform/`](power-platform/) | Recipes for canvas Power Apps and Power Automate flows: PMO task tracker, incident tracker, initiative tracker, intake form, OOO summary digest, and a SQL-stored-proc flow template. |
 | [`python/finra-brokercheck-pull/`](python/finra-brokercheck-pull/) | Bulk-download FINRA BrokerCheck reports for a list of broker CRDs and extract name / registration status / history into a CSV. |
 
