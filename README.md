@@ -8,8 +8,8 @@ This is a personal collection. It favours:
 
 - **Excel** as the primary surface, since that's where most finance work lands.
 - **VBA** for in-workbook automation that needs to ship as a single file.
-- **Power Query (M)** and **DAX** for repeatable, model-driven transformations (none yet — placeholder for additions).
-- **Access** for lightweight desktop databases when a workbook isn't enough (none yet — placeholder for additions).
+- **Power Platform** (Power Apps + Power Automate) for SharePoint- and SQL-backed apps. Captured here as recipes you re-implement in your own tenant, not as importable binaries.
+- **Python** for one-off batch jobs against public APIs and document corpora.
 
 Each utility lives in its own directory with its own README explaining what it does, how to install it, and any caveats.
 
@@ -18,6 +18,8 @@ Each utility lives in its own directory with its own README explaining what it d
 | Path | Description |
 |---|---|
 | [`excel/distro-mailer/`](excel/distro-mailer/) | Send the active Excel workbook to a list of email addresses read from a column on the active sheet. |
+| [`power-platform/`](power-platform/) | Recipes for canvas Power Apps and Power Automate flows: PMO task tracker, incident tracker, initiative tracker, intake form, and a SQL-stored-proc flow template. |
+| [`python/finra-brokercheck-pull/`](python/finra-brokercheck-pull/) | Bulk-download FINRA BrokerCheck reports for a list of broker CRDs and extract name / registration status / history into a CSV. |
 
 ## Conventions
 
