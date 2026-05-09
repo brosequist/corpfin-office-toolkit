@@ -21,6 +21,7 @@ Even after stripping employer-specific data, a stranger can't import a sanitized
 | [`initiative-tracker/`](initiative-tracker/) | Canvas app over three SharePoint lists (Initiatives → Domains → Tasks) for cross-functional programme tracking. |
 | [`intake-tracker/`](intake-tracker/) | Canvas intake form that writes to a SharePoint list. The simplest of the bunch — a good starter. |
 | [`flow-call-stored-proc/`](flow-call-stored-proc/) | A Power Automate flow that a canvas app calls to execute a SQL stored procedure and return rows. Generic template. |
+| [`ooo-summary/`](ooo-summary/) | Scheduled flow that emails a team a weekly digest of upcoming out-of-office time from a shared SharePoint calendar. |
 
 ## Conventions used in these recipes
 
